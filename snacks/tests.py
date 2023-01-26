@@ -6,7 +6,7 @@ from .models import Snack
 
 class SnacksTests(TestCase):
     def set_up(self):
-        self.user = get_user_model().objects.create_user(username="John", email="test@gmail.com", password="pass")
+        self.user = get_user_model().objects.create_user(username="tester", email="test@gmail.com", password="pass")
 
         self.snack = Snack.objects.create(title="popsicle", purchaser=self.user, description="description of popsicle")
 
@@ -15,7 +15,7 @@ class SnacksTests(TestCase):
 
     def test_snack_content(self):
         self.assertEqual(f"{self.snack.name}", "popsicle")
-        self.assertEqual(f"{self.snack.purchaser}", "John")
+        self.assertEqual(f"{self.snack.purchaser}", "tester")
         self.assertEqual(f"{self.snack.description}", "description of popsicle")
 
     def test_snack_list_view(self):
@@ -29,7 +29,7 @@ class SnacksTests(TestCase):
         no_response = self.client.get("/500")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(no_response.status_code, 404)
-        self.assertContains(response, "Purchaser: John")
+        self.assertContains(response, "Purchaser: tester")
         self.assertTemplateUsed(response, "snack_detail.html")
 
     def test_snack_create_view(self):
